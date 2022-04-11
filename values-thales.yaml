@@ -1,0 +1,24 @@
+envVars:
+- name: http_proxy
+  value: http://10.43.216.8:8080
+- name: https_proxy
+  value: http://10.43.216.8:8080
+- name: no_proxy
+  value: 10.96.0.1
+- name: HTTP_PROXY
+  value: http://10.43.216.8:8080
+- name: HTTPS_PROXY
+  value: http://10.43.216.8:8080
+- name: NO_PROXY
+  value: 10.96.0.1
+runners:
+  config: |
+    [[runners]]
+      pre_clone_script = "git config --global http.proxy $HTTP_PROXY; git config --global https.proxy $HTTPS_PROXY"
+      environment = ["https_proxy=http://192.168.1.3:3128", "http_proxy=http://192.168.1.3:3128", "HTTPS_PROXY=http://192.168.1.3:3128", "HTTP_PROXY=http://192.168.1.3:3128"]
+      [runners.kubernetes]
+        namespace = "{{.Release.Namespace}}"
+        image = "ubuntu:16.04"
+gitlabUrl: https://gitlab.thalesdigital.io/
+runnerRegistrationToken: GetItOnGitlab
+logLevel: debug
